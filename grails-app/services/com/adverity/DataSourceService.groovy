@@ -22,9 +22,12 @@ class DataSourceService {
         def closure = {
             and {
                 request.each {entry ->
-                    eq entry.key, entry.value
+                    eq entry.key, entry.key == 'id' ? entry.value.toLong() : entry.value
                 }
             }
         }
     }
+
+
+
 }

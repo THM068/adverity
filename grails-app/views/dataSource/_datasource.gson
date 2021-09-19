@@ -1,0 +1,10 @@
+import com.adverity.DataSource
+
+model {
+    DataSource dataSource
+}
+
+json {
+    id dataSource.id
+    name dataSource.name
+}

@@ -1,6 +1,8 @@
 response.status 500
-
+model {
+    String message
+}
 json {    
-    message "Internal server error"
+    message message
     error 500
 }

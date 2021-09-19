@@ -1,0 +1,7 @@
+import com.adverity.DataSource
+
+model {
+  List<DataSource> dataSourceList
+}
+
+json tmpl.datasource(dataSourceList)

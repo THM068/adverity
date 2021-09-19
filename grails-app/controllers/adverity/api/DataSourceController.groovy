@@ -1,9 +1,16 @@
 package adverity.api
-import grails.rest.*
-import grails.converters.*
 
-class DataSourceController {
+import com.adverity.DataSource
+import com.adverity.DataSourceService
+import com.adverity.JsonParserUtility
+
+class DataSourceController implements  JsonParserUtility{
 	static responseFormats = ['json', 'xml']
-	
-    def index() { }
+    DataSourceService dataSourceService
+
+    def index() {
+        Map model = parseRequest(params.q)
+        List<DataSource> list = dataSourceService.getDataSources(model)
+        [dataSourceList: list]
+    }
 }
