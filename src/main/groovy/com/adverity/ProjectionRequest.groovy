@@ -1,5 +1,9 @@
 package com.adverity
 
+import com.adverity.exceptions.DateParsingException
+import org.hibernate.exception.DataException
+
+import java.text.ParseException
 import java.text.SimpleDateFormat
 
 class ProjectionRequest {
@@ -10,11 +14,16 @@ class ProjectionRequest {
     Optional<DateRange> getDateRange() {
         String key = "\$between"
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy")
-        if(filters.containsKey(key) ){
-            Map<String, String> model = filters["\$between"]
-            Date from = dateFormat.parse(model['from'])
-            Date to = dateFormat.parse(model['to'])
-            return Optional.of(new DateRange(to: to, from: from))
+        if(filters.containsKey(key) ) {
+            try {
+                Map<String, String> model = filters["\$between"]
+                Date from = dateFormat.parse(model['from'])
+                Date to = dateFormat.parse(model['to'])
+                return Optional.of(new DateRange(to: to, from: from))
+            }
+            catch (ParseException ex) {
+                throw new DateParsingException("Please enter a valid date of format dd/MM/yyyy")
+            }
         }
         return Optional.empty()
     }

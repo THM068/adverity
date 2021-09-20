@@ -1,7 +1,5 @@
 package com.adverity
-
 import grails.gorm.transactions.Transactional
-import org.hibernate.FetchMode
 import org.hibernate.criterion.CriteriaSpecification
 
 import java.text.SimpleDateFormat
@@ -17,7 +15,7 @@ class CampaignStatService {
 
     Closure projectionCriteria(ProjectionRequest request) {
         def criteriaClosure = {
-            fetchMode 'campaign', FetchMode.JOIN
+            //fetchMode 'campaign', FetchMode.JOIN
             createAlias("dataSource", "dataSource")
             createAlias("campaign", "campaign")
             resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
@@ -37,8 +35,6 @@ class CampaignStatService {
                        }
                     }
                 }
-               // groupProperty 'dataSource.name', 'data_source'
-               // groupProperty 'campaign.name', 'campaign'
             }
             and {
                 request.filters.each {entry ->
@@ -54,20 +50,3 @@ class CampaignStatService {
         }
     }
 }
-
-//def result = CampaignStat.createCriteria().list {
-//    fetchMode 'campaign', FetchMode.JOIN
-//    createAlias("dataSource", "source")
-//    createAlias("campaign", "camp")
-//    resultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP)
-//    projections {
-//        "$sum"('clicks', 'clicks')
-//        groupProperty 'source.name', 'data_source'
-//        groupProperty 'camp.name', 'campaign'
-//        min 'daily', 'from'
-//        max 'daily', 'to'
-//    }
-//    and {
-//        //eq 'source.name', 'Twitter'
-//    }
-//}

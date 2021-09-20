@@ -1,0 +1,7 @@
+model {
+    List<Map<String, Object>> result
+}
+
+json {
+    result result
+}

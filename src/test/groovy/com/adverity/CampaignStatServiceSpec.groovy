@@ -2,10 +2,6 @@ package com.adverity
 
 import grails.test.hibernate.HibernateSpec
 import grails.testing.services.ServiceUnitTest
-import spock.lang.Specification
-
-import java.sql.Time
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
 class CampaignStatServiceSpec extends HibernateSpec implements ServiceUnitTest<CampaignStatService>{
@@ -15,9 +11,6 @@ class CampaignStatServiceSpec extends HibernateSpec implements ServiceUnitTest<C
 
     def setup() {
         testObj = new CampaignStatService()
-    }
-
-    def cleanup() {
     }
 
     void "Get sum of clicks for a given datasource and time"() {
@@ -73,7 +66,7 @@ class CampaignStatServiceSpec extends HibernateSpec implements ServiceUnitTest<C
             def query = new ProjectionRequest(projections: ["\$sum": ["clicks"] ], filters: ["dataSource": "Twitter", "\$between": ["from": "12/02/2020", "to": "12/04/2020"]], groupBy: ["\$groupBy": ["campaign", "dataSource"]] )
         when:
             List<Map<String,Object>> result = testObj.getProjectionsFor(query)
-            then:
+        then:
             result.size() == 1
             Map firstResult = result.first()
             firstResult['clicks_sum'] == 140
