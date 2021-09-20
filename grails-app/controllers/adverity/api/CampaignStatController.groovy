@@ -14,7 +14,7 @@ class CampaignStatController implements  JsonParserUtility{
     def index() {
         ProjectionRequest projectionRequest = getProjectionRequest(params)
         def result = campaignStatService.getProjectionsFor(projectionRequest)
-        [result: result]
+        [result: result, projectionRequest: projectionRequest]
     }
 
     private ProjectionRequest getProjectionRequest(params) {
