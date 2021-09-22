@@ -16,6 +16,7 @@ trait JsonParserUtility {
     }
 
     def handleIllegalArgumentException(IllegalArgumentException illegalArgumentException) {
+        illegalArgumentException.printStackTrace()
         render(status: 400, message: "Please specify a query e.g url?q={}")
     }
 }

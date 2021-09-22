@@ -17,6 +17,10 @@ class CampaignStatController implements  JsonParserUtility{
         [result: result, projectionRequest: projectionRequest]
     }
 
+    def clickthroughrate() {
+        [clickThroughRateList: campaignStatService.getClickThroughRate()]
+    }
+
     private ProjectionRequest getProjectionRequest(params) {
         ProjectionRequest projectionRequest = new ProjectionRequest()
         if(!params.p) {

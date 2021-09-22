@@ -1,7 +1,6 @@
 package com.adverity
 
 import com.adverity.exceptions.DateParsingException
-import org.hibernate.exception.DataException
 
 import java.text.ParseException
 import java.text.SimpleDateFormat

@@ -6,9 +6,10 @@ model {
 }
 
 json {
-    if(projectionRequest.filters.containsKey("\$between") ) {
-        String from = projectionRequest.filters["\$between"]["from"]
-        String to = projectionRequest.filters["\$between"]["to"]
+    String betweenKey = "\$between"
+    if(projectionRequest.filters.containsKey(betweenKey) ) {
+        String from = projectionRequest.filters[(betweenKey)]["from"]
+        String to = projectionRequest.filters[(betweenKey)]["to"]
         date "$from - $to"
     }
     result result

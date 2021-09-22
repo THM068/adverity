@@ -11,6 +11,7 @@ class UrlMappings {
         patch "/$controller/$id(.$format)?"(action:"patch")
 
         get "/adverity/api/campaignstats/projections"(controller: 'campaignStat', action: 'index')
+        get "/adverity/api/campaignstats/ctr"(controller: 'campaignStat', action: 'clickthroughrate')
 
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')

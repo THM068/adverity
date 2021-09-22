@@ -1,16 +1,24 @@
 package com.adverity
 import grails.gorm.transactions.Transactional
 import org.hibernate.criterion.CriteriaSpecification
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.jdbc.core.JdbcTemplate
 
 import java.text.SimpleDateFormat
 
 @Transactional
 class CampaignStatService {
+    @Autowired
+    JdbcTemplate jdbcTemplate
 
     List<String> supportedProjections = ['sum', 'avg', 'max', 'min']
     List<Map<String, Object>> getProjectionsFor(ProjectionRequest request) {
-   def result = CampaignStat.createCriteria().list(projectionCriteria(request))
-      return result
+        List<Map<String, Object>> result = CampaignStat.createCriteria().list(projectionCriteria(request))
+        return result
+    }
+
+    List<ClickThroughRate> getClickThroughRate() {
+        List<Map> result = jdbcTemplate.query(CLTR_SQL, new ClickThroughRateRowMapper())
     }
 
     Closure projectionCriteria(ProjectionRequest request) {
@@ -49,4 +57,12 @@ class CampaignStatService {
             }
         }
     }
+
+    private final String CLTR_SQL = """
+select campaign.name as campaign,data_source.name as datasource, sum(clicks)/SUM(impressions) * 100 as clickThroughRate
+ from campaign_stat 
+ INNER JOIN campaign  on campaign.id = campaign_stat.campaign_id
+ INNER JOIN data_source on data_source.id = campaign_stat.data_source_id
+GROUP BY campaign_id, data_source_id
+"""
 }

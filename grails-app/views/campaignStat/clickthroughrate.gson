@@ -1,0 +1,9 @@
+import com.adverity.ClickThroughRate
+
+model {
+    List<ClickThroughRate> clickThroughRateList
+}
+
+json {
+    result clickThroughRateList
+}
