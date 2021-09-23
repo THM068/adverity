@@ -3,12 +3,14 @@ package com.adverity
 import grails.gorm.transactions.Rollback
 import grails.testing.mixin.integration.Integration
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.annotation.DirtiesContext
 import spock.lang.Specification
 
 import java.text.SimpleDateFormat
 
 @Integration
 @Rollback
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class CampaignStatServiceIntegrationSpec extends Specification {
 
     @Autowired
@@ -34,10 +36,20 @@ class CampaignStatServiceIntegrationSpec extends Specification {
         when:
             def result = campaignStatService.getClickThroughRate()
         then:
-            result.size() == 3
+            result.size() == 2
 
             ClickThroughRate first = result.first()
+            first.campaign == 'GDN_Retargeting'
+            first.datasource == 'Twitter'
+            first.getClickThroughRate() == 50.0
 
+            ClickThroughRate second = result[1]
+            second.campaign == 'GDN_Walking'
+            second.getClickThroughRate() == 50.0
+            second.datasource == 'Facebook'
+    }
+
+    def 'get impressions over time for given datasource and campaign'() {
 
     }
 

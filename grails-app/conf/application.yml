@@ -94,8 +94,12 @@ environments:
             password:
     test:
         dataSource:
-            dbCreate: update
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            dbCreate: create-drop
+            driverClassName: com.mysql.cj.jdbc.Driver
+            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+            url: jdbc:mysql://localhost:3306/adverityTest
+            username: root
+            password:
     production:
         dataSource:
             dbCreate: none

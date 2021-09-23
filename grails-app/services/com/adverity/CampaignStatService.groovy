@@ -1,8 +1,12 @@
 package com.adverity
+
+import com.adverity.exceptions.DbAccessException
 import grails.gorm.transactions.Transactional
 import org.hibernate.criterion.CriteriaSpecification
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.DataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
 import java.text.SimpleDateFormat
 
@@ -18,7 +22,12 @@ class CampaignStatService {
     }
 
     List<ClickThroughRate> getClickThroughRate() {
-        List<Map> result = jdbcTemplate.query(CLTR_SQL, new ClickThroughRateRowMapper())
+        try {
+            return jdbcTemplate.query(CLTR_SQL, new ClickThroughRateRowMapper())
+        }
+        catch (DataAccessException ex ) {
+            throw new DbAccessException(ex.message)
+        }
     }
 
     Closure projectionCriteria(ProjectionRequest request) {

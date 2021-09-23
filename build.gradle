@@ -72,7 +72,8 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.26'
     implementation 'org.springframework:spring-jdbc:5.3.10'
 
-    testImplementation "org.testcontainers:mysql:1.16.0"
+    testCompile 'mysql:mysql-connector-java:8.0.26'
+    testCompile 'org.springframework:spring-jdbc:5.3.10'
 }
 
 bootRun {
