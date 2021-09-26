@@ -1,0 +1,9 @@
+import com.adverity.DailyImpressions
+
+model {
+    List<DailyImpressions> impressionsOverTime
+}
+
+json {
+    result impressionsOverTime
+}

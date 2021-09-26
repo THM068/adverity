@@ -5,7 +5,6 @@ import com.adverity.JsonParserUtility
 import com.adverity.ProjectionRequest
 import com.adverity.exceptions.DateParsingException
 import com.adverity.exceptions.MissingParameterException
-import groovy.json.JsonException
 
 class CampaignStatController implements  JsonParserUtility{
 	static responseFormats = ['json', 'xml']
@@ -19,6 +18,10 @@ class CampaignStatController implements  JsonParserUtility{
 
     def clickthroughrate() {
         [clickThroughRateList: campaignStatService.getClickThroughRate()]
+    }
+
+    def impressionsOverTime() {
+        [impressionsOverTime: campaignStatService.impressionsOverTime(getCampaignName(params))]
     }
 
     private ProjectionRequest getProjectionRequest(params) {
@@ -36,6 +39,14 @@ class CampaignStatController implements  JsonParserUtility{
         }
 
         return projectionRequest
+    }
+
+    private String getCampaignName(params) {
+        if(!params.q) {
+            throw new MissingParameterException("Missing projection parameter q in request")
+        }
+        Map<String, String> campaignNameMap = parseRequest(params.q)
+        campaignNameMap.getOrDefault("campaign", "")
     }
 
     def handleMissingParameterException(MissingParameterException e) {

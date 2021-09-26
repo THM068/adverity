@@ -2,13 +2,16 @@ package com.adverity
 
 import com.adverity.exceptions.DbAccessException
 import grails.gorm.transactions.Transactional
+import groovy.transform.CompileStatic
 import org.hibernate.criterion.CriteriaSpecification
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
-import java.text.SimpleDateFormat
+import static com.adverity.constants.SQL.IMPRESSIONS_OVER_TIME
+import static com.adverity.constants.SQL.getCLTR_SQL
 
 @Transactional
 class CampaignStatService {
@@ -67,11 +70,32 @@ class CampaignStatService {
         }
     }
 
-    private final String CLTR_SQL = """
-select campaign.name as campaign,data_source.name as datasource, sum(clicks)/SUM(impressions) * 100 as clickThroughRate
- from campaign_stat 
- INNER JOIN campaign  on campaign.id = campaign_stat.campaign_id
- INNER JOIN data_source on data_source.id = campaign_stat.data_source_id
-GROUP BY campaign_id, data_source_id
-"""
+    Closure impressionsOverTimeClosure(String campaignName) {
+        def criteriaClosure = {
+            createAlias("campaign", "campaign")
+            if(campaignName) {
+                and {
+                    eq "campaign.name" campaignName
+                }
+                order("daily", "asc")
+            }
+        }
+    }
+
+    List<DailyImpressions> impressionsOverTime(final String campaign) {
+       def query = CampaignStat.where {
+           campaign == Campaign.findByName(campaign)
+       }
+
+       query.list(sort: 'daily').collect {
+           DailyImpressions dailyImpressions = new DailyImpressions()
+           dailyImpressions.campaign = it.campaign.name
+           dailyImpressions.datasource = it.dataSource.name
+           dailyImpressions.impressions = it.impressions
+           dailyImpressions.setDaily(it.daily)
+           dailyImpressions
+       }
+    }
+
+
 }
