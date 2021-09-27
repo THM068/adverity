@@ -106,5 +106,5 @@ environments:
             driverClassName: com.mysql.cj.jdbc.Driver
             dialect: org.hibernate.dialect.MySQL5InnoDBDialect
             url: jdbc:mysql://localhost:3306/adverity
-            username: root
-            password: Alexandra2020
+            username: adverity
+            password: M*12dadsa&*sfdsfsdsd
