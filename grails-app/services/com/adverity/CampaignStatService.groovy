@@ -66,18 +66,6 @@ class CampaignStatService {
         }
     }
 
-    Closure impressionsOverTimeClosure(String campaignName) {
-        def criteriaClosure = {
-            createAlias("campaign", "campaign")
-            if(campaignName) {
-                and {
-                    eq "campaign.name" campaignName
-                }
-                order("daily", "asc")
-            }
-        }
-    }
-
     List<DailyImpressions> impressionsOverTime(final String campaign) {
        def query = CampaignStat.where {
            campaign == Campaign.findByName(campaign)
