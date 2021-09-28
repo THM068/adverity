@@ -2,16 +2,12 @@ package com.adverity
 
 import com.adverity.exceptions.DbAccessException
 import grails.gorm.transactions.Transactional
-import groovy.transform.CompileStatic
 import org.hibernate.criterion.CriteriaSpecification
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
 import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 
-import static com.adverity.constants.SQL.IMPRESSIONS_OVER_TIME
-import static com.adverity.constants.SQL.getCLTR_SQL
+import static com.adverity.constants.SQL.CLTR_SQL
 
 @Transactional
 class CampaignStatService {
