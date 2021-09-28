@@ -1,4 +1,4 @@
-###Adverity Quering Api
+### Adverity Quering Api
 I have created a simple api to query the information you sent me.
 
 The Api is composed of three endpoints:
@@ -26,6 +26,7 @@ http://176.58.127.204:8080/adverity/api/reports/projections?p={"$sum":["clicks"]
 FYI- please test using postman or insomnia
 
 The q parameter is used to filter results e.g
+
 http://176.58.127.204:8080/adverity/api/reports/projections?p={"$sum": ["clicks","impressions"]}&h={"$groupby": ["campaign", "dataSource"]}&q={"dataSource": "Google Ads", "$between": {"from": "12/11/2019", "to":"14/11/2019"}}
 
 Example of queries
