@@ -15,6 +15,7 @@ The query parameter q is used to for projections such as ['sum', 'avg', 'max', '
 | Syntax      | Example |
 | ----------- | ----------- |
 |  $sum       | http://localhost:8080/adverity/api/reports/projections?p={"$sum":["clicks"]}       |
+
 Projections support $sum $avg $max $min and only supported on the /adverity/api/reports/projections endpoint
 
 The query parameter h is used for grouping the datasource and campaigns e.g
